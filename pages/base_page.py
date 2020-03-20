@@ -16,3 +16,6 @@ class BasePage():
         except (NoSuchElementException):
             return False
         return True
+
+    def is_url_available(self, url):
+        self.browser.get(url)
