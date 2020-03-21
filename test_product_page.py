@@ -2,7 +2,7 @@ import pytest
 from .pages.product_page import ProductPage
 from .pages.login_page import LoginPage
 from .pages.basket_page import BasketPage
-#import time
+import time
 
 @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1",
@@ -93,3 +93,42 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     basket_page.should_not_be_basket_items()
     # Ожидаем, что есть текст о том что корзина пуста
     basket_page.should_be_empty_basket_message()
+
+@pytest.mark.user_reguster
+class TestUserAddToBasketFromProductPage:
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        email = str(time.time()) + "@fakemail.org"
+        password = "fdtR45Tds&ee"
+        login_page = LoginPage(browser, "http://selenium1py.pythonanywhere.com/en-gb/accounts/login/")
+        login_page.open()
+        login_page.register_new_user(email, password)
+        login_page.should_be_authorized_user()
+
+    @pytest.mark.xfail
+    @pytest.mark.negative
+    def test_user_cant_see_success_message_after_adding_product_to_basket(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0"
+        # Открываем страницу товара
+        product_page = ProductPage(browser, link, 10)
+        product_page.open()
+        # Добавляем товар в корзину
+        product_page.add_to_basket()
+        # Проверяем, что нет сообщения об успехе с помощью is_not_element_present
+        product_page.should_not_be_success_message()
+
+
+    def test_user_can_add_product_to_basket(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0"
+        print("will test link [{}]".format(link))
+        product_page = ProductPage(browser, link, 10)
+        product_page.open()
+
+        product_page.add_to_basket()
+
+        product_page.should_be_basket_message_equal_to_product_name()
+        print("product names are equal in card and message")
+        product_page.should_be_basket_message_equal_to_product_price()
+        print("product prices are equal in card and message")
+
+        print("test link [{}] done".format(link))
