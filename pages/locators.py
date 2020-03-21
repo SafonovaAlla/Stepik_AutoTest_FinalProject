@@ -1,5 +1,5 @@
+from selenium import webdriver
 from selenium.webdriver.common.by import By
-
 
 class MainPageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
@@ -14,3 +14,4 @@ class ProductPageLocators():
     PRODUCT_NAME_MESSAGE = (By.CSS_SELECTOR, "#messages > div:nth-child(1) strong")
     PRICE_PRODUCT = (By.CSS_SELECTOR, "article.product_page div.product_main p.price_color")
     PRICE_MESSAGE = (By.CSS_SELECTOR, "#messages > div:nth-child(3) strong")
+    SUCCESS_MESSAGE = (By.CSS_SELECTOR, "#messages div.alert-success")

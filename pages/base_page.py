@@ -1,6 +1,11 @@
 import math
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.common.exceptions import TimeoutException
 
 
 class BasePage():
@@ -10,8 +15,10 @@ class BasePage():
         self.url = url
         self.browser.implicitly_wait(timeout)
 
+
     def open(self):
         self.browser.get(self.url)
+
 
     def is_element_present(self, how, what):
         try:
@@ -19,6 +26,7 @@ class BasePage():
         except (NoSuchElementException):
             return False
         return True
+
 
     def is_elements_text_equal(self, how_what1, how_what2):
         try:
@@ -29,6 +37,7 @@ class BasePage():
         if (element1.text != element2.text):
             return False
         return True
+
 
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
@@ -43,3 +52,22 @@ class BasePage():
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
+
+
+    def is_not_element_present(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return True
+
+        return False
+
+
+    def is_disappeared(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException). \
+                until_not(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+
+        return True
