@@ -8,4 +8,4 @@ def test_guest_can_login_or_register(browser):
     page.open()
     page.go_to_login_page()
     login_page = LoginPage(browser, browser.current_url)
-    login_page.should_be_login_page()  # сразу три проверки, подтверждающте, что мы на странице "войти или зарегистрироваться"
+    login_page.should_be_login_page()  # сразу три проверки, подтверждающие, что мы на странице "войти или зарегистрироваться"
