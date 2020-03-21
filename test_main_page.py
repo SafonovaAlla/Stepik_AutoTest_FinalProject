@@ -17,7 +17,7 @@ def test_guest_should_see_login_link(browser):
 
 def test_guest_cant_see_product_in_basket_opened_from_main_page(browser):
     # Гость открывает главную страницу
-    link = "http://selenium1py.pythonanywhere.com/en-gb/"
+    link = "http://selenium1py.pythonanywhere.com/"
     page = MainPage(browser, link)
     page.open()
     # Переходит в корзину по кнопке в шапке сайта
