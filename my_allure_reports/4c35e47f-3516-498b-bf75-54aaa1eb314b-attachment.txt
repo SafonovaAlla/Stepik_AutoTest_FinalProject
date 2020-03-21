@@ -1,0 +1,9 @@
+
+start chrome browser for test..
+will test link [http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer6]
+No second alert presented
+product names are equal in card and message
+product prices are equal in card and message
+test link [http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer6] done
+
+quit browser..
