@@ -2,8 +2,7 @@ from selenium import webdriver
 import pytest
 
 def pytest_addoption(parser):
-    parser.addoption('--language', action='store', default='en',
-                     help="Choose language: es, ru, etc.")
+    parser.addoption('--language', action='store', default='en', help="en only")
 
 
 @pytest.fixture(scope="function")
